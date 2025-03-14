@@ -1,0 +1,15 @@
+@use "./variables.scss";
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+.wrapper {
+  max-width: var(--max-width-wrapper);
+  width: 100%;
+  margin: 0 auto;
+  padding: 80px 0 120px;
+}

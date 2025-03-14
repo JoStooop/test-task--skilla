@@ -1,0 +1,75 @@
+.audio {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  background-color: blue;
+  padding: 10px;
+  border-radius: 48px;
+  padding-right: 20px;
+  padding-left: 19px;
+  margin-left: auto;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  visibility: hidden;
+  position: absolute;
+  right: 34px;
+  top: 11px;
+
+  // Добавьте это, чтобы аудиоплеер был видимым при наведении
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+.controls {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.time {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 21.75px;
+  letter-spacing: 0%;
+  text-align: right;
+  color: #122945;
+  margin-right: 12px;
+}
+
+.play {
+  display: flex;
+  width: 24px;
+  height: 24px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.progress_bar {
+  flex: 2;
+  background-color: #adbfdfa1;
+  height: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #ADBFDF;
+}
+
+.download {
+  margin-left: 12px;
+  margin-right: 12px;
+
+  &:hover {
+    color: #002CFB;
+  }
+}
+
