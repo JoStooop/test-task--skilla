@@ -1,0 +1,116 @@
+.dropdown {
+  position: relative;
+}
+
+.toggle {
+  padding: 8px 0 0 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: SF Pro Display, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 148%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+  opacity: 87%;
+  color: var(--color-text-secondary);
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    .arrow-icon-path {
+      fill: #002CFB;
+    }
+
+    .calendar-icon {
+      stroke: #002CFB;
+    }
+
+    .selected-date {
+      color: #002CFB;
+    }
+  }
+}
+
+.selected_date {
+  color: #002CFB;
+}
+
+.menu {
+  position: absolute;
+  top: 42px;
+  right: -15px;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0px 4px 20px 0px #00000014;
+  margin: 0;
+  min-width: 205px;
+  height: 240px;
+  padding-bottom: 14px;
+  border-radius: 4px;
+}
+
+.item {
+  height: 40px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-family: SF Compact Display, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  opacity: 87%;
+  color: var(--color-text-tertiary);
+
+  &:hover {
+    background-color: #DEE4FF;
+  }
+
+  &.active {
+    color: #015EF5;
+  }
+}
+
+.datePickerItem {
+  padding: 8px 0 8px 0;
+}
+
+.datePickerContainer {
+  display: flex;
+  padding-left: 17px;
+  width: 175px;
+  height: 30px;
+  justify-content: flex-start;
+  align-items: center;
+
+  & span {
+    margin: 0px 4px 0 0;
+  }
+}
+
+.datePickerInput {
+  border: none;
+  font-family: SF Compact Display, sans-serif;
+  font-size: 12px;
+  width: 66px;
+  text-align: center;
+}
+
+.datePickerButton {
+  padding: 8px;
+  background-color: #002CFB;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: SF Compact Display, sans-serif;
+  font-size: 12px;
+
+  &:disabled {
+    background-color: #ADBFDF;
+    cursor: not-allowed;
+  }
+}

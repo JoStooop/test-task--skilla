@@ -1,0 +1,26 @@
+:root {
+  // Основные цвета
+  --color-background: #F1F4F9;
+  --color-text-primary: #122945;
+  --color-text-secondary: #5E7793;
+  --color-text-tertiary: #2B2D33;
+  --color-blue-primary: #005FF8;
+  --color-white: #fff;
+  --color-shadow: #E9EDF3;
+
+
+  // Цвета акцентов
+  --color-accent-blue-dark: #1F46FB;
+  --color-accent-blue-light: #015EF5;
+  --color-accent-blue-bright: #002CFB;
+
+  // Отступы
+  --padding-container: 40px;
+  --padding-wrapper: 80px;
+
+  // Размеры
+  --max-width-wrapper: 1440px;
+  --border-radius: 8px;
+}
+
+$screen-tablet: 768px

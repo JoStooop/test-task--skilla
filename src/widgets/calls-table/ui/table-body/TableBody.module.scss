@@ -1,0 +1,25 @@
+.audio {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  background-color: red;
+  padding: 10px;
+  border-radius: 48px;
+  padding-right: 20px;
+  padding-left: 19px;
+  margin-left: auto;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  visibility: hidden;
+  position: absolute;
+  right: 34px;
+  top: 11px;
+
+  // Добавьте это, чтобы аудиоплеер был видимым при наведении
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
