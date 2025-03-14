@@ -1,0 +1,12 @@
+@import "@app/styles/variables";
+
+.lead {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 21px;
+  color: var(--color-text-primary);
+}
+
+.company {
+  color: var(--color-text-secondary);
+}
