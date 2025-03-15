@@ -25,24 +25,24 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
 
   return (
     <div className={styles.dropdown}>
+      <ArrowMiniIcon
+        width={9}
+        height={6}
+        fill={styles.arrowIcon}
+        rotate={-90}
+        className={styles.arrowIcon}
+      />
       <button className={styles.toggle} onClick={() => setIsOpen(!isOpen)}>
-        <ArrowMiniIcon
-          width={9}
-          height={6}
-          fill="#ADBFDF"
-          rotate={-90}
-          className={styles.arrowIcon}
-        />
-        <CalendarIcon style={{marginRight: '5px'}} fill="#ADBFDF"/>
+        <CalendarIcon className={styles.calendarDate} fill={styles.calendarDate}/>
         <span className={styles.selected_date}>{selectedDate}</span>
-        <ArrowMiniIcon
-          width={9}
-          height={6}
-          fill="#ADBFDF"
-          rotate={90}
-          className={styles.arrowIcon}
-        />
       </button>
+      <ArrowMiniIcon
+        width={9}
+        height={6}
+        fill={styles.arrowIcon}
+        rotate={90}
+        className={styles.arrowIcon}
+      />
 
       {isOpen && (
         <ul className={styles.menu}>
@@ -88,31 +88,3 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
     </div>
   );
 };
-
-
-// import { Dropdown } from '@shared/ui/dropdown/Dropdown';
-// import { OptionDate } from "@features/calls-table/types/tableOptionsTypes.ts";
-// import {FC} from "react";
-// import {CalendarIcon} from "@shared/ui/icons/CalendarIcon.tsx";
-//
-// interface DropdownDateProps {
-//   options: OptionDate[];
-//   selectedDate: OptionDate;
-//   onDateChange: (date: OptionDate) => void;
-// }
-//
-// export const DropdownDate: FC<DropdownDateProps> = ({ options, selectedDate, onDateChange }) => {
-//   return (
-//     <Dropdown
-//       options={options}
-//       selectedValue={selectedDate}
-//       onChange={onDateChange}
-//       renderSelected={(value) => (
-//         <>
-//           <CalendarIcon style={{ marginRight: '8px' }} fill="#ADBFDF" />
-//           <span>{value}</span>
-//         </>
-//       )}
-//     />
-//   );
-// };
