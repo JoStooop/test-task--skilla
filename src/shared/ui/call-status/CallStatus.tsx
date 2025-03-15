@@ -21,20 +21,13 @@ export const CallStatus: FC<CallStatusProps> = ({status, errors = []}) => {
   const mappedStatus = statusMapping[status] || '';
   const statusClass = statusClasses[mappedStatus] || '';
 
-  if (!mappedStatus) {
-    return null;
-  }
+  if (errors.length > 0) return <div className={styles.error}>{errors[0]}</div>
 
   return (
     <div className={styles.wrap}>
       <div className={`${styles.badge} ${statusClass}`}>
         {mappedStatus}
       </div>
-      {errors.length > 0 && (
-        <div className={styles.error}>
-          {errors[0]}
-        </div>
-      )}
     </div>
   );
 };

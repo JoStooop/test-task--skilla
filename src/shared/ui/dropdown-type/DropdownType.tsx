@@ -1,35 +1,37 @@
 import styles from './DropdownType.module.scss';
-import {FC, useCallback, useState} from 'react';
+import {FC, useState} from 'react';
 import {ArrowMiniIcon} from "@shared/ui/icons/ArrowMiniIcon.tsx";
 import {CloseIcon} from "@shared/ui/icons/CloseIcon.tsx";
+import {OptionType} from "@features/calls-table/types/tableOptionsTypes.ts";
 
 interface DropdownTypeProps {
-  onTypeChange: (type: string) => void;
-  options: string[];
+  options: OptionType[];
+  onTypeChange: (type: OptionType) => void;
 }
 
 export const DropdownType: FC<DropdownTypeProps> = ({options = [], onTypeChange}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [selectedType, setSelectedType] = useState<string>(options[0]);
+  const [selectedType, setSelectedType] = useState<OptionType>(options[0]);
 
-  const handleSelect = useCallback((type: string) => {
+  const handleSelect = (type: OptionType) => {
     setSelectedType(type);
     onTypeChange(type);
     setIsOpen(false);
-  }, [onTypeChange]);
+  };
 
-  const handleReset = useCallback(() => {
+  const handleReset = () => {
     const defaultType = options[0];
     setSelectedType(defaultType);
     onTypeChange(defaultType);
-  }, [onTypeChange, options]);
+  };
 
-  const showResetButton = selectedType === 'Входящие' || selectedType === 'Исходящие';
+  const showResetButton = ['Входящие', 'Исходящие'].includes(selectedType);
 
   return (
     <div className={styles.dropdown}>
       <button className={`${styles.toggle} ${showResetButton ? styles.toggle_active : ''}`}
-              onClick={() => setIsOpen(!isOpen)}>
+              onClick={() => setIsOpen(!isOpen)}
+      >
         {selectedType}
         <ArrowMiniIcon width={9} height={6} fill='#ADBFDF' rotate={isOpen ? 0 : 180}/>
       </button>
@@ -56,3 +58,37 @@ export const DropdownType: FC<DropdownTypeProps> = ({options = [], onTypeChange}
     </div>
   );
 };
+
+
+// import { Dropdown } from '@shared/ui/dropdown/Dropdown';
+// import { OptionType } from "@features/calls-table/types/tableOptionsTypes.ts";
+// import {FC} from "react";
+//
+// interface DropdownTypeProps {
+//   options: OptionType[];
+//   selectedType: OptionType;
+//   onTypeChange: (type: OptionType) => void;
+// }
+//
+// export const DropdownType: FC<DropdownTypeProps> = ({ options, selectedType, onTypeChange }) => {
+//   const showReset = ['Входящие', 'Исходящие'].includes(selectedType);
+//
+//   const handleReset = () => {
+//     onTypeChange(options[0]); // Сброс на "Все типы"
+//   };
+//
+//   return (
+//     <Dropdown
+//       options={options}
+//       selectedValue={selectedType}
+//       onChange={onTypeChange}
+//       showReset={showReset}
+//       onReset={handleReset}
+//       renderSelected={(value) => (
+//         <span style={{ color: value === 'Входящие' || value === 'Исходящие' ? '#002CFB' : 'inherit' }}>
+//           {value}
+//         </span>
+//       )}
+//     />
+//   );
+// };

@@ -1,16 +1,17 @@
-import { FC, useState } from 'react';
-import { ArrowMiniIcon } from '@shared/ui/icons/ArrowMiniIcon.tsx';
 import styles from './TableHead.module.scss';
+import {FC, useCallback, useState} from 'react';
+import {Headers, SortByType} from "@features/calls-table/types/tableTypes.ts";
+import {ArrowMiniIcon} from '@shared/ui/icons/ArrowMiniIcon.tsx';
 
 interface TableHeadProps {
-  headers: { label: string; sortBy?: 'date' | 'duration' }[];
-  onSort: (sortBy: 'date' | 'duration' | null) => void;
+  headers: Headers[];
+  onSort: (sortBy: SortByType | null) => void;
 }
 
-export const TableHead: FC<TableHeadProps> = ({ headers, onSort }) => {
-  const [activeSort, setActiveSort] = useState<'date' | 'duration' | null>(null);
+export const TableHead: FC<TableHeadProps> = ({headers, onSort}) => {
+  const [activeSort, setActiveSort] = useState<SortByType | null>(null);
 
-  const handleSort = (sortBy: 'date' | 'duration') => {
+  const handleSort = useCallback((sortBy: SortByType) => {
     if (activeSort === sortBy) {
       setActiveSort(null);
       onSort(null);
@@ -18,25 +19,22 @@ export const TableHead: FC<TableHeadProps> = ({ headers, onSort }) => {
       setActiveSort(sortBy);
       onSort(sortBy);
     }
-  };
+  }, [onSort, activeSort])
 
   return (
     <thead>
     <tr>
-      {headers.map(({ label, sortBy }) => (
+      {headers.map(({label, sortBy}) => (
         <th key={label} className={styles.headerCell}>
           {sortBy ? (
-            <button
-              className={styles.sortButton}
-              onClick={() => handleSort(sortBy)}
-            >
+            <button className={`${styles.sortButton} ${activeSort === sortBy ? styles.sortButton_active : ''}`}
+                    onClick={() => handleSort(sortBy)}>
               {label}
               <ArrowMiniIcon
                 width={9}
                 height={6}
                 fill={activeSort === sortBy ? '#002CFB' : '#ADBFDF'}
                 rotate={activeSort === sortBy ? 0 : 180}
-                className={styles.arrowIcon}
               />
             </button>
           ) : (
