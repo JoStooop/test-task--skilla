@@ -1,30 +1,64 @@
 
-
 ```text
 src/
-├── app/                  # Инициализация приложения
+├── app/
+│   ├── store/
+│   │   ├── selectors/*
+│   │   └── slices/*
+│   ├── styles/*
 │   ├── App.tsx
 │   └── main.tsx
-├── pages/                # Страницы
-│   └── CallsPage/
-│       ├── ui/
-│       └── index.ts
-├── features/             # Фичи
-│   ├── callFilters/      # Фильтрация звонков
-│   ├── callSorting/      # Сортировка звонков
-│   └── callPlayer/       # Проигрывание записей
-├── entities/             # Сущности
-│   └── call/             # Сущность "звонок"
-│       ├── api/
+│
+├── entities/
+│   └── call/
+│       └── utils/
+│           ├── filterByType.ts
+│           ├── filterByDateRange.ts
+│           ├── dateUtils.ts
+│           └── formatDuration.ts
+│
+├── features/
+│   └── calls-table/
+│       ├── constants/
+│       │   ├── headers.ts
+│       │   └── tableOptions.ts
 │       ├── model/
+│       │   └── useCallsTable.ts
+│       ├── types/
+│       │   ├── tableOptionsTypes.ts
+│       │   └── tableTypes.ts
 │       └── ui/
-├── shared/               # Общие компоненты и утилиты
-│   ├── api/              # API-клиент
-│   ├── ui/               # Переиспользуемые UI-компоненты
-│   └── lib/              # Утилиты и хелперы
-└── widgets/              # Виджеты (опционально, если нужно)
-    └── callList/         # Виджет списка звонков
-
+│           └── CallsTable.tsx
+│
+├── pages/
+│   └── calls-page/
+│       └── CallsPage.tsx
+│
+│
+├── shared/
+│   ├── assets/
+│   │   └── fonts/
+│   │       └── sf-pro-display/*
+│   ├── lib/
+│   │   └── hooks/
+│   │       └── useAudio.ts
+│   └── ui/   
+│       ├── audio-player/*
+│       ├── call-group-header/*
+│       ├── call-lead/*
+│       ├── call-status/*
+│       ├── dropdown-date/*
+│       ├── dropdown-type/*
+│       ├── icons/*
+│       └── table-row/*
+│
+├── widgets/
+│   └── calls-table/
+│       └── ui/
+│           ├── table-body/*
+│           ├── table-head/*
+│           └── table-header/*
+│
 ```
 
 - Конвертор шрифтов - https://convertio.co/ru/otf-woff/

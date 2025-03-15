@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectCalls } from '@app/store/selectors/callsSelector.ts';
 import { fetchCalls } from '@app/store/slices/callsSlice.ts';
 import { AppDispatch } from '@app/store/store.ts';
-import { filterCallsByType, filterCallsByDateRange } from '@entities/call/utils/filterCalls';
+import { filterCallsByType } from '@entities/call/utils/filterByType.ts';
+import {filterCallsByDateRange} from "@entities/call/utils/filterByDateRange.ts";
 
 export const useCallsTable = () => {
   const dispatch = useDispatch<AppDispatch>();

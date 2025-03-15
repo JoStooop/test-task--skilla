@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {Call} from "@app/store/slices/callsSlice.ts";
 import {TableRow} from "@shared/ui/table-row/TableRow.tsx";
 import {CallGroupHeader} from "@shared/ui/call-group-header/CallGroupHeader.tsx";
-import {getFormattedDate, getFormattedDates} from "@entities/call/utils/filterCalls.ts";
+import {getFormattedDate, getFormattedDates} from "@entities/call/utils/dateUtils.ts";
 
 interface TableBodyProps {
   calls: Call[];

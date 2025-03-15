@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {CalendarIcon} from "@shared/ui/icons/CalendarIcon.tsx";
 import {DateRange, OptionDate} from "@features/calls-table/types/tableOptionsTypes.ts";
-import {getDateRange} from "@entities/call/utils/filterCalls.ts";
+import {getDateRange} from "@entities/call/utils/dateUtils.ts";
 
 interface DropdownDateProps {
   options: OptionDate[];
