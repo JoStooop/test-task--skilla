@@ -1,7 +1,8 @@
+import styles from '@features/calls-table/ui/CallsTable.module.scss';
 import {FC} from 'react';
 import {format} from 'date-fns';
 import {CallStatus} from '@shared/ui/call-status/CallStatus.tsx';
-// import {AudioPlayer} from '@shared/ui/audio-player/AudioPlayer.tsx';
+import {AudioPlayer} from '@shared/ui/audio-player/AudioPlayer.tsx';
 import {CallLead} from '@shared/ui/call-lead/CallLead.tsx';
 import {ArrowIcon} from '@shared/ui/icons/ArrowIcon.tsx';
 import {convertSecondsToMinutes} from '@entities/call/utils/filterCalls.ts';
@@ -37,18 +38,16 @@ export const TableBody: FC<TableBodyProps> = ({calls}) => {
           <CallStatus status={call.status} errors={call.errors}/>
         </td>
         <td>
-          <div className="time">
-            {call.time !== 0 && <div>{convertSecondsToMinutes(call.time)}</div>}
+          <div className={styles.durationCell}>
+            <div className={styles.time}>
+              {call.time !== 0 && <div>{convertSecondsToMinutes(call.time)}</div>}
+            </div>
+            {call.time !== 0 && (
+              <div className={styles.audio}>
+                <AudioPlayer time={call.time} record={call.record} partnershipId={call.partnership_id}/>
+              </div>
+            )}
           </div>
-          {/*<div className="time">*/}
-          {/*  {hoveredRow === call.id ? (*/}
-          {/*    <div className={`${styles.audio} ${hoveredRow === call.id ? 'visible' : ''}`}>*/}
-          {/*      <AudioPlayer time={call.time} record={call.record} partnershipId={call.partnership_id}/>*/}
-          {/*    </div>*/}
-          {/*  ) : (*/}
-          {/*    call.time !== 0 && <div>{convertSecondsToMinutes(call.time)}</div>*/}
-          {/*  )}*/}
-          {/*</div>*/}
         </td>
       </tr>
     ))}

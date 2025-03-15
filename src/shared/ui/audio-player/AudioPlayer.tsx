@@ -1,8 +1,9 @@
 import styles from './AudioPlayer.module.scss';
-import {FC, useEffect, useRef, useState} from 'react';
+import {FC, useRef, useState} from 'react';
 import {DownloadIcon} from "@shared/ui/icons/DownloadIcon.tsx";
 import {PauseIcon} from "@shared/ui/icons/PauseIcon.tsx";
 import {PlayIcon} from "@shared/ui/icons/PlayIcon.tsx";
+import {CloseIcon} from "@shared/ui/icons/CloseIcon.tsx";
 import {useAudio} from "@shared/lib/hooks/useAudio.ts";
 
 interface AudioPlayerProps {
@@ -11,19 +12,12 @@ interface AudioPlayerProps {
   partnershipId: string;
 }
 
-export const AudioPlayer: FC<AudioPlayerProps> = ({record, partnershipId}) => {
+export const AudioPlayer: FC<AudioPlayerProps> = ({time, record, partnershipId}) => {
   const {audioSrc, isLoading, error, loadAudio} = useAudio(record, partnershipId);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState("00:00");
   const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    if (audioSrc) {
-      audioRef.current!.src = audioSrc;
-      audioRef.current?.play();
-      setIsPlaying(true);
-    }
-  }, [audioSrc]);
 
   const handlePlayPause = async () => {
     if (!audioSrc) {
@@ -44,12 +38,12 @@ export const AudioPlayer: FC<AudioPlayerProps> = ({record, partnershipId}) => {
     setProgress(0);
   };
 
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      const {currentTime, duration} = audioRef.current;
-      setProgress((currentTime / duration) * 100);
-    }
-  };
+  // const handleTimeUpdate = () => {
+  //   if (audioRef.current) {
+  //     const {currentTime, duration} = audioRef.current;
+  //     setProgress((currentTime / duration) * 100);
+  //   }
+  // };
 
   const handleDownload = async () => {
     if (!audioSrc) {
@@ -69,69 +63,38 @@ export const AudioPlayer: FC<AudioPlayerProps> = ({record, partnershipId}) => {
   };
 
   return (
-    <div className={styles.audio}>
+    <div className={styles.player}>
       <audio
         ref={audioRef}
-        onTimeUpdate={handleTimeUpdate}
+        onTimeUpdate={(e) => {
+          const audio = e.currentTarget;
+          setProgress((audio.currentTime / audio.duration) * 100);
+          setCurrentTime(new Date(audio.currentTime * 1000).toISOString().slice(14, 19));
+        }}
         onEnded={handleEnded}
-      />
-      <button
-        className={styles.play}
-        onClick={handlePlayPause}
-        disabled={isLoading}
       >
-        {isLoading ? 'Загрузка...' : isPlaying ? <PauseIcon/> : <PlayIcon/>}
-      </button>
-      <div className={styles.progress_bar}>
-        <div
-          className={styles.progress}
-          style={{width: `${progress}%`}}
-        />
+        {audioSrc && <source src={audioSrc} type="audio/mpeg"/>}
+      </audio>
+
+      <div className={styles.controls}>
+        <div className={styles.time}>{currentTime}</div>
+        <button className={styles.playButton} onClick={handlePlayPause}>
+          {isPlaying ? <PauseIcon/> : <PlayIcon/>}
+        </button>
       </div>
-      <button
-        className={styles.download}
-        onClick={handleDownload}
-        disabled={isLoading}
-      >
-        <DownloadIcon/>
-      </button>
-      {error && <div className={styles.error}>{error}</div>}
+
+      <div className={styles.progressBar}>
+        <div className={styles.progress} style={{width: `${progress}%`}}/>
+      </div>
+
+      <div className={styles.actions}>
+        <button className={styles.downloadButton} onClick={handleDownload}>
+          <DownloadIcon/>
+        </button>
+        <button className={styles.closeButton}>
+          <CloseIcon width={14} height={14} fill="#002CFB"/>
+        </button>
+      </div>
     </div>
   );
 };
-
-
-// <div className="CustomAudioPlayer">
-//   <audio
-//     ref={audioRef}
-//     onTimeUpdate={handleTimeUpdate}
-//     onEnded={() => setIsPlaying(false)}
-//   >
-//     {audioSrc && <source src={audioSrc} type="audio/mpeg"/>}
-//   </audio>
-//   <div className="CustomAudioPlayer__controls">
-//     <div className="CustomAudioPlayer__time">{currentTime}</div>
-//     <button
-//       className="CustomAudioPlayer__play"
-//       onClick={handlePlayPause}
-//     >
-//       {isPlaying ? <PauseIcon/> : <PlayIcon/>}
-//     </button>
-//   </div>
-//   <div className="CustomAudioPlayer__progress-bar">
-//     <div
-//       className="CustomAudioPlayer__progress"
-//       style={{width: `${progress}%`}}
-//     ></div>
-//   </div>
-//   <a
-//     href={audioSrc}
-//     download
-//     className="CustomAudioPlayer__download"
-//   >
-//     <DownloadIcon/>
-//   </a>
-//   <button>
-//     <CloseIcon width={14} height={14} fill='#002CFB'/>
-//   </button>
-// </div>
