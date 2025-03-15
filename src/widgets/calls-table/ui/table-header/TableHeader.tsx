@@ -3,11 +3,11 @@ import {FC} from "react";
 import {DropdownType} from '@shared/ui/dropdown-type/DropdownType.tsx';
 import {DropdownDate} from '@shared/ui/dropdown-date/DropdownDate.tsx';
 import {optionsType, optionsDate} from "@features/calls-table/constants/tableOptions.ts";
-import {OptionDate, OptionType} from "@features/calls-table/types/tableOptionsTypes.ts";
+import {DateRange, OptionType} from "@features/calls-table/types/tableOptionsTypes.ts";
 
 interface TableHeaderProps {
   onTypeChange: (type: OptionType) => void;
-  onDateChange: (date: OptionDate) => void;
+  onDateChange: (date: DateRange) => void;
 }
 
 export const TableHeader: FC<TableHeaderProps> = ({onTypeChange, onDateChange}) => {
