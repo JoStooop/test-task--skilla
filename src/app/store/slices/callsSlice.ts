@@ -6,20 +6,10 @@ export interface Call {
   person_avatar: string;
   person_name: string;
   partnership_id: string;
-  partner_data: {
-    id: string;
-    name: string;
-    phone: string;
-  };
   date: string;
-  date_notime: string;
-  disconnect_reason: string;
-  from_number: string;
   in_out: number;
   record: string;
-  results: any[];
   source: string;
-  stages: any[];
   status: string;
   time: number;
   contact_name: string;
@@ -59,6 +49,7 @@ export const fetchCalls = createAsyncThunk(
           },
         }
       );
+      console.log(data.results[0])
       return data.results;
     } catch (error) {
       if (axios.isAxiosError(error)) {

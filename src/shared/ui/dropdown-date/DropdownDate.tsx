@@ -4,19 +4,20 @@ import {ArrowMiniIcon} from '@shared/ui/icons/ArrowMiniIcon';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import {CalendarIcon} from "@shared/ui/icons/CalendarIcon.tsx";
+import {OptionDate} from "@features/calls-table/types/tableOptionsTypes.ts";
 
 interface DropdownDateProps {
-  options: string[];
-  onDateChange: (date: string) => void;
+  options: OptionDate[];
+  onDateChange: (date: OptionDate) => void;
 }
 
 export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>(options[0]);
+  const [selectedDate, setSelectedDate] = useState<OptionDate>(options[0]);
 
-  const handleSelect = useCallback((date: string) => {
+  const handleSelect = useCallback((date: OptionDate) => {
     setSelectedDate(date);
     onDateChange(date);
     setIsOpen(false);
@@ -86,3 +87,31 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
     </div>
   );
 };
+
+
+// import { Dropdown } from '@shared/ui/dropdown/Dropdown';
+// import { OptionDate } from "@features/calls-table/types/tableOptionsTypes.ts";
+// import {FC} from "react";
+// import {CalendarIcon} from "@shared/ui/icons/CalendarIcon.tsx";
+//
+// interface DropdownDateProps {
+//   options: OptionDate[];
+//   selectedDate: OptionDate;
+//   onDateChange: (date: OptionDate) => void;
+// }
+//
+// export const DropdownDate: FC<DropdownDateProps> = ({ options, selectedDate, onDateChange }) => {
+//   return (
+//     <Dropdown
+//       options={options}
+//       selectedValue={selectedDate}
+//       onChange={onDateChange}
+//       renderSelected={(value) => (
+//         <>
+//           <CalendarIcon style={{ marginRight: '8px' }} fill="#ADBFDF" />
+//           <span>{value}</span>
+//         </>
+//       )}
+//     />
+//   );
+// };
