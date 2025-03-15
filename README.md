@@ -36,21 +36,25 @@ src/
 │
 │
 ├── shared/
+│   ├── api/ 
+│   │   ├── audioApi.ts
+│   │   └── callsApi.ts
 │   ├── assets/
 │   │   └── fonts/
 │   │       └── sf-pro-display/*
 │   ├── lib/
 │   │   └── hooks/
 │   │       └── useAudio.ts
-│   └── ui/   
-│       ├── audio-player/*
-│       ├── call-group-header/*
-│       ├── call-lead/*
-│       ├── call-status/*
-│       ├── dropdown-date/*
-│       ├── dropdown-type/*
-│       ├── icons/*
-│       └── table-row/*
+│   ├── ui/   
+│   │   ├── audio-player/*
+│   │   ├── call-group-header/*
+│   │   ├── call-lead/*
+│   │   ├── call-status/*
+│   │   ├── dropdown-date/*
+│   │   ├── dropdown-type/*
+│   │   ├── icons/*
+│   │   └── table-row/*
+│   └── config.ts
 │
 ├── widgets/
 │   └── calls-table/
