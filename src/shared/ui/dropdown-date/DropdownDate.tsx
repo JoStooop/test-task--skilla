@@ -33,7 +33,7 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
           rotate={-90}
           className={styles.arrowIcon}
         />
-        <CalendarIcon style={{marginRight: '8px'}} fill="#ADBFDF"/>
+        <CalendarIcon style={{marginRight: '5px'}} fill="#ADBFDF"/>
         <span className={styles.selected_date}>{selectedDate}</span>
         <ArrowMiniIcon
           width={9}
@@ -43,9 +43,10 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
           className={styles.arrowIcon}
         />
       </button>
+
       {isOpen && (
         <ul className={styles.menu}>
-          {options.map((option: any) => (
+          {options.map((option: OptionDate) => (
             <li
               key={option}
               className={`${styles.item} ${selectedDate === option ? styles.active : ''}`}
@@ -54,8 +55,8 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
               {option}
             </li>
           ))}
-          <li className={styles.datePickerItem}>
-            <div className={`${styles.item} ${styles.item_date}`}>Указать даты</div>
+          <div className={styles.datePickerItem}>
+            <div className={styles.date_title}>Указать даты</div>
             <div className={styles.datePickerContainer}>
               <DatePicker
                 selected={startDate}
@@ -81,7 +82,7 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
               />
               <CalendarIcon/>
             </div>
-          </li>
+          </div>
         </ul>
       )}
     </div>

@@ -25,12 +25,12 @@ export const ArrowMiniIcon: FC<ArrowMiniIconProps> = (props) => {
       viewBox="0 0 12 8"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className} // Добавляем класс для стилизации
+      className={className}
     >
       <path
         d="M6 0L0 6L1.41 7.41L6 2.83L10.59 7.41L12 6L6 0Z"
         fill={fill}
-        className="arrow-icon-path" // Добавляем класс для пути
+        className="arrow-icon-path"
       />
     </svg>
   );
