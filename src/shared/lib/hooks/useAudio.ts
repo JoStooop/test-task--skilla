@@ -4,11 +4,13 @@ import {fetchRecordData} from '@app/store/slices/callsAudioSlice';
 import {AppDispatch, RootState} from '@app/store/store';
 
 type UseAudioType = {
-  record: string;
-  partnership_id: string;
+  record?: string;
+  partnership_id?: string;
 };
 
-export const useAudio = ({record, partnership_id}: UseAudioType) => {
+export const useAudio = ({record = undefined, partnership_id = undefined}: UseAudioType) => {
+  // {record= undefined, partnership_id=undefined} -> undefined заглушка
+  // {record, partnership_id} - по итогу вот так должно быть
   const dispatch = useDispatch<AppDispatch>();
   const {data: audioSrc, status, error} = useSelector((state: RootState) => state.callsAudio);
   const [isLoading, setIsLoading] = useState<boolean>(false);

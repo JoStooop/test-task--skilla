@@ -13,9 +13,9 @@ interface AudioPlayerProps {
 }
 
 export const AudioPlayer: FC<AudioPlayerProps> = ({call}) => {
-  const {time, record, partnership_id} = call;
+  const {time} = call;
   // const {audioSrc, isLoading, error} = useAudio({record, partnership_id});
-  const {audioSrc, isLoading, error} = useAudio(record, partnership_id); // undef, undef - чтобы не сработал error
+  const {audioSrc, isLoading, error} = useAudio({}); // Ничего не передаем чтобы не сработал error
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
