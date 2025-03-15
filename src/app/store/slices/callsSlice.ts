@@ -49,7 +49,7 @@ export const fetchCalls = createAsyncThunk(
           },
         }
       );
-      console.log(data.results[0])
+      console.log(data.results)
       return data.results;
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -1,14 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-interface callsAudioState {
-  // data: string | null;
-  data: any;
+interface CallsAudioState {
+  data: string | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
 
-const initialState: callsAudioState = {
+const initialState: CallsAudioState = {
   data: null,
   status: 'idle',
   error: null,
@@ -16,23 +15,23 @@ const initialState: callsAudioState = {
 
 export const fetchRecordData = createAsyncThunk(
   'callsAudio/fetchRecordData',
-  async ({ record, partnershipId }: { record: string; partnershipId: string }) => {
+  async ({ record, partnership_id }: { record: string; partnership_id: string }) => {
     try {
       const response = await axios.post(
         'https://api.skilla.ru/mango/getRecord',
         {
-          record,
-          partnership_id: partnershipId,
+          record: record,
+          partnership_id: partnership_id,
         },
         {
           headers: {
             Authorization: 'Bearer testtoken',
             'Content-Type': 'application/json',
           },
-          responseType: 'blob', // Для загрузки аудио как Blob
+          responseType: 'blob',
         }
       );
-      return URL.createObjectURL(response.data); // Создаем URL для Blob
+      return URL.createObjectURL(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new Error(error.response?.data?.message || 'Ошибка загрузки аудио');
@@ -46,7 +45,13 @@ export const fetchRecordData = createAsyncThunk(
 const callsAudioSlice = createSlice({
   name: 'callsAudio',
   initialState,
-  reducers: {},
+  reducers: {
+    resetAudioState: (state) => {
+      state.data = null;
+      state.status = 'idle';
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecordData.pending, (state) => {
@@ -64,4 +69,5 @@ const callsAudioSlice = createSlice({
   },
 });
 
+export const { resetAudioState } = callsAudioSlice.actions;
 export default callsAudioSlice.reducer;

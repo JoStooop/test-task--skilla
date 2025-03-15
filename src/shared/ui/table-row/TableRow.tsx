@@ -14,19 +14,17 @@ interface TableRowProps {
 
 export const TableRow: FC<TableRowProps> = ({call}) => {
   const {
-    partnership_id,
     status,
     in_out,
     date,
     time,
-    record,
     person_avatar,
     person_name,
     contact_name,
     contact_company,
     to_number,
-    source,
     errors,
+    source,
   } = call;
 
   return (
@@ -58,7 +56,7 @@ export const TableRow: FC<TableRowProps> = ({call}) => {
           </div>
           {time !== 0 && (
             <div className={styles.audio}>
-              <AudioPlayer time={time} record={record} partnershipId={partnership_id}/>
+              <AudioPlayer call={call}/>
             </div>
           )}
         </div>

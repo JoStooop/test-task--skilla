@@ -5,32 +5,24 @@ import {PauseIcon} from "@shared/ui/icons/PauseIcon.tsx";
 import {PlayIcon} from "@shared/ui/icons/PlayIcon.tsx";
 import {CloseIcon} from "@shared/ui/icons/CloseIcon.tsx";
 import {useAudio} from "@shared/lib/hooks/useAudio.ts";
+import {Call} from "@app/store/slices/callsSlice.ts";
+import {convertSecondsToMinutes} from "@entities/call/utils/filterCalls.ts";
 
 interface AudioPlayerProps {
-  time?: number;
-  record: string;
-  partnershipId: string;
+  call: Call;
 }
 
-export const AudioPlayer: FC<AudioPlayerProps> = ({time, record, partnershipId}) => {
-  const {audioSrc, isLoading, error, loadAudio} = useAudio(record, partnershipId);
+export const AudioPlayer: FC<AudioPlayerProps> = ({call}) => {
+  const {time, record, partnership_id} = call;
+  // const {audioSrc, isLoading, error} = useAudio({record, partnership_id});
+  const {audioSrc, isLoading, error} = useAudio(record, partnership_id); // undef, undef - чтобы не сработал error
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [progress, setProgress] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState("00:00");
-  const [progress, setProgress] = useState(0);
+  const [currentTime] = useState(convertSecondsToMinutes(time));
 
   const handlePlayPause = async () => {
-    if (!audioSrc) {
-      await loadAudio();
-      return;
-    }
-
-    if (isPlaying) {
-      audioRef.current?.pause();
-    } else {
-      audioRef.current?.play();
-    }
-    setIsPlaying(!isPlaying);
+    console.log('Play / Pause')
   };
 
   const handleEnded = () => {
@@ -38,41 +30,16 @@ export const AudioPlayer: FC<AudioPlayerProps> = ({time, record, partnershipId})
     setProgress(0);
   };
 
-  // const handleTimeUpdate = () => {
-  //   if (audioRef.current) {
-  //     const {currentTime, duration} = audioRef.current;
-  //     setProgress((currentTime / duration) * 100);
-  //   }
-  // };
-
   const handleDownload = async () => {
-    if (!audioSrc) {
-      await loadAudio();
-    }
-
-    if (audioSrc) {
-      const response = await fetch(audioSrc);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `record_${partnershipId}.mp3`;
-      a.click();
-      window.URL.revokeObjectURL(url);
-    }
+    console.log('download')
   };
+
+  if (isLoading) return <div>Загрузка...</div>
+  if (error) return <div>{error}</div>
 
   return (
     <div className={styles.player}>
-      <audio
-        ref={audioRef}
-        onTimeUpdate={(e) => {
-          const audio = e.currentTarget;
-          setProgress((audio.currentTime / audio.duration) * 100);
-          setCurrentTime(new Date(audio.currentTime * 1000).toISOString().slice(14, 19));
-        }}
-        onEnded={handleEnded}
-      >
+      <audio ref={audioRef} onEnded={handleEnded}>
         {audioSrc && <source src={audioSrc} type="audio/mpeg"/>}
       </audio>
 
