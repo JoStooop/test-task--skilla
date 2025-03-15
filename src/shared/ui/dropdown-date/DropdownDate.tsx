@@ -17,7 +17,6 @@ export const DropdownDate: FC<DropdownDateProps> = ({options, onDateChange}) => 
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [selectedDate, setSelectedDate] = useState<OptionDate>(options[0]);
-  console.log('selectedDate', selectedDate, )
 
   const handleSelect = useCallback((option: OptionDate) => {
     setSelectedDate(option);

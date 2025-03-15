@@ -57,3 +57,18 @@ export const getDateRange = (option: OptionDate) => {
       throw new Error('Выберите из списка');
   }
 };
+
+export const getFormattedDate = (dateString: string) => {
+  return new Date(dateString).toISOString().split('T')[0];
+};
+
+ export const getFormattedDates = () => {
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+
+  return {
+    today: today.toISOString().split('T')[0],
+    yesterday: yesterday.toISOString().split('T')[0],
+  };
+};
