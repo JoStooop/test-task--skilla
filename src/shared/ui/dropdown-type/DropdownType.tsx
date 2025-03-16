@@ -58,37 +58,3 @@ export const DropdownType: FC<DropdownTypeProps> = ({options = [], onTypeChange}
     </div>
   );
 };
-
-
-// import { Dropdown } from '@shared/ui/dropdown/Dropdown';
-// import { OptionType } from "@features/calls-table/types/tableOptionsTypes.ts";
-// import {FC} from "react";
-//
-// interface DropdownTypeProps {
-//   options: OptionType[];
-//   selectedType: OptionType;
-//   onTypeChange: (type: OptionType) => void;
-// }
-//
-// export const DropdownType: FC<DropdownTypeProps> = ({ options, selectedType, onTypeChange }) => {
-//   const showReset = ['Входящие', 'Исходящие'].includes(selectedType);
-//
-//   const handleReset = () => {
-//     onTypeChange(options[0]); // Сброс на "Все типы"
-//   };
-//
-//   return (
-//     <Dropdown
-//       options={options}
-//       selectedValue={selectedType}
-//       onChange={onTypeChange}
-//       showReset={showReset}
-//       onReset={handleReset}
-//       renderSelected={(value) => (
-//         <span style={{ color: value === 'Входящие' || value === 'Исходящие' ? '#002CFB' : 'inherit' }}>
-//           {value}
-//         </span>
-//       )}
-//     />
-//   );
-// };

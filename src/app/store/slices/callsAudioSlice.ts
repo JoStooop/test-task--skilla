@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {fetchRecordAudio} from "@shared/api/audioApi.ts";
 
 interface CallsAudioState {
   data: string | null;
@@ -16,29 +16,7 @@ const initialState: CallsAudioState = {
 export const fetchRecordData = createAsyncThunk(
   'callsAudio/fetchRecordData',
   async ({ record, partnership_id }: { record: string; partnership_id: string }) => {
-    try {
-      const response = await axios.post(
-        'https://api.skilla.ru/mango/getRecord',
-        {
-          record: record,
-          partnership_id: partnership_id,
-        },
-        {
-          headers: {
-            Authorization: 'Bearer testtoken',
-            'Content-Type': 'application/json',
-          },
-          responseType: 'blob',
-        }
-      );
-      return URL.createObjectURL(response.data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || 'Ошибка загрузки аудио');
-      } else {
-        throw new Error('Неизвестная ошибка');
-      }
-    }
+    return await fetchRecordAudio(record, partnership_id);
   }
 );
 

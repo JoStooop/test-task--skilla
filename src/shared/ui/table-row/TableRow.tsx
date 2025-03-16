@@ -5,8 +5,8 @@ import {ArrowIcon} from "@shared/ui/icons/ArrowIcon.tsx";
 import {format} from "date-fns";
 import {CallLead} from "@shared/ui/call-lead/CallLead.tsx";
 import {CallStatus} from "@shared/ui/call-status/CallStatus.tsx";
-import {convertSecondsToMinutes} from "@entities/call/utils/filterCalls.ts";
 import {AudioPlayer} from "@shared/ui/audio-player/AudioPlayer.tsx";
+import {convertSecondsToMinutes} from "@entities/call/utils/formatDuration.ts";
 
 interface TableRowProps {
   call: Call;

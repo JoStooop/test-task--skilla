@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchRecordData} from '@app/store/slices/callsAudioSlice';
-import {AppDispatch, RootState} from '@app/store/store';
+import {AppDispatch} from '@app/store/store';
+import {selectCallsAudio} from "@app/store/selectors/callsSelector.ts";
 
 type UseAudioType = {
   record?: string;
@@ -12,7 +13,7 @@ export const useAudio = ({record = undefined, partnership_id = undefined}: UseAu
   // {record= undefined, partnership_id=undefined} -> undefined заглушка
   // {record, partnership_id} - по итогу вот так должно быть
   const dispatch = useDispatch<AppDispatch>();
-  const {data: audioSrc, status, error} = useSelector((state: RootState) => state.callsAudio);
+  const {data: audioSrc, status, error} = useSelector(selectCallsAudio);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

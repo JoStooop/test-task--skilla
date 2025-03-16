@@ -6,7 +6,7 @@ import {PlayIcon} from "@shared/ui/icons/PlayIcon.tsx";
 import {CloseIcon} from "@shared/ui/icons/CloseIcon.tsx";
 import {useAudio} from "@shared/lib/hooks/useAudio.ts";
 import {Call} from "@app/store/slices/callsSlice.ts";
-import {convertSecondsToMinutes} from "@entities/call/utils/filterCalls.ts";
+import {convertSecondsToMinutes} from "@entities/call/utils/formatDuration.ts";
 
 interface AudioPlayerProps {
   call: Call;
