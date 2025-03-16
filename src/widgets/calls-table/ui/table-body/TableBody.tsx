@@ -29,7 +29,7 @@ export const TableBody: FC<TableBodyProps> = ({ calls, selectedPeriod = 'Сег�
     <tbody>
     {calls.length === 0 && (
       <tr>
-        <td>
+        <td colSpan={7} style={{ textAlign: 'center' }}>
           Нет данных о звонках
         </td>
       </tr>
