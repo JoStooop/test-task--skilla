@@ -1,9 +1,11 @@
 .dropdown {
+  display: flex;
+  align-items: center;
   position: relative;
 }
 
 .toggle {
-  padding: 8px 0 0 0;
+  padding: 0 8px 0 8px;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
@@ -19,20 +21,6 @@
   color: var(--color-text-secondary);
   background-color: transparent;
   border: none;
-
-  &:hover {
-    .arrow-icon-path {
-      fill: #002CFB;
-    }
-
-    .calendar-icon {
-      stroke: #002CFB;
-    }
-
-    .selected-date {
-      color: #002CFB;
-    }
-  }
 }
 
 .selected_date {
@@ -63,15 +51,28 @@
   line-height: 18px;
   letter-spacing: 0%;
   opacity: 87%;
-  color: var(--color-text-tertiary);
+  color: #899CB1;
 
   &:hover {
+    color: var(--color-text-primary);
     background-color: #DEE4FF;
   }
 
   &.active {
     color: #015EF5;
   }
+}
+
+.date_title {
+  height: 40px;
+  padding: 8px 16px;
+  font-family: SF Compact Display, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  opacity: 87%;
+  color: var(--color-text-tertiary);
 }
 
 .datePickerItem {
@@ -87,6 +88,7 @@
   align-items: center;
 
   & span {
+    color: #ADBFDF;
     margin: 0px 4px 0 0;
   }
 }
@@ -97,6 +99,7 @@
   font-size: 12px;
   width: 66px;
   text-align: center;
+  color: #ADBFDF;
 }
 
 .datePickerButton {
@@ -112,5 +115,25 @@
   &:disabled {
     background-color: #ADBFDF;
     cursor: not-allowed;
+  }
+}
+
+.arrowIcon {
+  cursor: pointer;
+  fill: #ADBFDF;
+
+  &:hover {
+    fill: #002CFB;
+
+  }
+}
+
+.calendarDate {
+  cursor: pointer;
+  transition: all 0.5s ease;
+  fill: #ADBFDF;
+
+  &:hover {
+    fill: #002CFB;
   }
 }

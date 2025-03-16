@@ -5,6 +5,7 @@ interface CalendarIconProps {
   height?: number;
   fill?: string;
   style?: CSSProperties;
+  className?: string;
 }
 
 export const CalendarIcon: FC<CalendarIconProps> = (props) => {
@@ -13,6 +14,7 @@ export const CalendarIcon: FC<CalendarIconProps> = (props) => {
     height = 18,
     fill = "#ADBFDF",
     style,
+    className,
   } = props;
 
   return (
@@ -20,6 +22,7 @@ export const CalendarIcon: FC<CalendarIconProps> = (props) => {
       width={width}
       height={height}
       style={style}
+      className={className}
       viewBox="0 0 16 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

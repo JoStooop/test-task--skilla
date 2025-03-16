@@ -1,36 +1,21 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import axios from "axios";
+import {fetchCallsApi} from "@shared/api/callsApi.ts";
 
 export interface Call {
   id: number;
   person_avatar: string;
   person_name: string;
   partnership_id: string;
-  partner_data: {
-    id: string;
-    name: string;
-    phone: string;
-  };
   date: string;
-  date_notime: string;
-  disconnect_reason: string;
-  from_number: string;
   in_out: number;
   record: string;
-  results: any[];
   source: string;
-  stages: any[];
   status: string;
   time: number;
   contact_name: string;
   contact_company: string;
   to_number: string;
   errors: string[];
-}
-
-interface ApiResponse {
-  results: Call[];
-  total_rows: string;
 }
 
 interface CallsState {
@@ -48,25 +33,7 @@ const initialState: CallsState = {
 export const fetchCalls = createAsyncThunk(
   'calls/fetchCalls',
   async () => {
-    try {
-      const {data} = await axios.post<ApiResponse>(
-        'https://api.skilla.ru/mango/getList',
-        null,
-        {
-          headers: {
-            Authorization: 'Bearer testtoken',
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      return data.results;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        throw new Error(error.response?.data?.message || 'Ошибка загрузки данных');
-      } else {
-        throw new Error('Неизвестная ошибка');
-      }
-    }
+    return await fetchCallsApi();
   }
 );
 

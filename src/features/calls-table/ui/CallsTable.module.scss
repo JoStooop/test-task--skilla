@@ -11,47 +11,14 @@
     box-sizing: border-box;
     font-weight: 400;
     line-height: 148%;
-    letter-spacing: .3px;
+    letter-spacing: 0.3px;
     text-align: left;
-  }
-
-  th:nth-child(1), td:nth-child(1) { // Тип
-    width: 6.5%;
-    padding-left: 40px;
-  }
-
-  th:nth-child(2), td:nth-child(2) { // Время
-    width: 6%;
-  }
-
-  th:nth-child(3), td:nth-child(3) {  // Сотрудник
-    width: 9%;
-  }
-
-  th:nth-child(4), td:nth-child(4) { // Звонок
-    width: 22.5%;
-  }
-
-  th:nth-child(5), td:nth-child(5) { // Источник
-    width: 15%;
-    color: var(--color-text-secondary);
-  }
-
-  th:nth-child(6), td:nth-child(6) {  // Оценка
-    width: 5%;
-  }
-
-  th:nth-child(7), td:nth-child(7) { // Длительность
-    width: 33.5%;
-    padding-left: 390px;
-    text-align: right;
-    position: relative; // Добавлено для правильного позиционирования аудиоплеера
   }
 
   th {
     color: var(--color-text-secondary);
     padding: 24px 0;
-    opacity: 87%;
+    opacity: 0.87;
     font-size: 14px;
   }
 
@@ -62,36 +29,72 @@
     padding: 0;
     font-size: 15px;
 
-    &:nth-child(2), &:nth-child(4), &:nth-child(6){
+    &:nth-child(2), &:nth-child(4), &:nth-child(6) {
       padding-bottom: 6px;
     }
   }
 
-  tbody tr {
-    position: relative;
-
-    &:hover {
-      background-color: #d4dff32c;
-
-      .time {
-        display: none;
-      }
-
-      .audio {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
+  th, td {
+    &:nth-child(1) { // Тип
+      width: 6.5%;
+      padding-left: 40px;
     }
 
-    &::after {
-      content: "";
-      width: 100%;
-      height: 1px;
-      background-color: #eaf0fa;
-      position: absolute;
-      top: -4px;
-      left: 40px;
+    &:nth-child(2) { // Время
+      width: 6%;
+    }
+
+    &:nth-child(3) { // Сотрудник
+      width: 9%;
+    }
+
+    &:nth-child(4) { // Звонок
+      width: 22.5%;
+    }
+
+    &:nth-child(5) { // Источник
+      width: 15%;
+      color: var(--color-text-secondary);
+    }
+
+    &:nth-child(6) { // Оценка
+      width: 20%;
+    }
+
+    &:nth-child(7) { // Длительность
+      padding-right: 30px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  tbody {
+    tr {
+      position: relative;
+
+      &:hover {
+        background-color: #d4dff32c;
+
+        .time {
+          opacity: 0;
+          visibility: hidden;
+        }
+
+        .audio {
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+
+      &::after {
+        content: "";
+        width: calc(100% - 40px);
+        height: 1px;
+        background-color: #eaf0fa;
+        position: absolute;
+        top: -4px;
+        left: 40px;
+      }
     }
   }
 
@@ -101,4 +104,31 @@
     border-radius: 50%;
     margin-right: 8px;
   }
+}
+
+.durationCell {
+  padding-right: 10px;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.time {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.audio {
+  position: absolute;
+  //right: 40px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  width: 352px;
+  background-color: #EAF0FA;
+  border-radius: 48px;
+  bottom: 11px;
 }

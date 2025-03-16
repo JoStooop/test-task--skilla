@@ -1,57 +1,55 @@
-import {FC} from 'react';
-import {format} from 'date-fns';
-import {CallStatus} from '@shared/ui/call-status/CallStatus.tsx';
-// import {AudioPlayer} from '@shared/ui/audio-player/AudioPlayer.tsx';
-import {CallLead} from '@shared/ui/call-lead/CallLead.tsx';
-import {ArrowIcon} from '@shared/ui/icons/ArrowIcon.tsx';
-import {convertSecondsToMinutes} from '@entities/call/utils/filterCalls.ts';
-import {Call} from "@app/store/slices/callsSlice.ts";
+import { FC } from 'react';
+import { Call } from '@app/store/slices/callsSlice.ts';
+import { getFormattedDate, getFormattedDates, getDateRange } from '@entities/call/utils/dateUtils.ts';
+import { OptionDate } from '@features/calls-table/types/tableOptionsTypes.ts';
+import {CallGroup} from "@shared/ui/call-group/CallGroup.tsx";
 
 interface TableBodyProps {
   calls: Call[];
+  selectedPeriod?: OptionDate;
 }
 
-export const TableBody: FC<TableBodyProps> = ({calls}) => {
+export const TableBody: FC<TableBodyProps> = ({ calls, selectedPeriod = 'Сегодня' }) => {
+  const { today, yesterday } = getFormattedDates();
+
+  const callsToday = selectedPeriod === 'Сегодня'
+    ? calls.filter((call) => getFormattedDate(call.date) === today) : [];
+  const callsYesterday = selectedPeriod === 'Сегодня'
+    ? calls.filter((call) => getFormattedDate(call.date) === yesterday) : [];
+
+  const { startDate, endDate } = getDateRange(selectedPeriod);
+  const filteredCalls = selectedPeriod !== 'Сегодня'
+    ? calls.filter((call) => {
+      const callDate = getFormattedDate(call.date);
+      return callDate >= startDate && callDate <= endDate;
+    })
+    : [];
+
   return (
     <tbody>
-    {calls.map((call: any) => (
-      <tr key={call.id}>
+    {calls.length === 0 && (
+      <tr>
         <td>
-          <ArrowIcon status={call.status} inOut={call.in_out}/>
-        </td>
-        <td>{format(call.date, 'HH:mm')}</td>
-        <td>
-          <div>
-            <img src={call.person_avatar} alt={call.person_name}/>
-          </div>
-        </td>
-        <td>
-          <CallLead
-            contactName={call.contact_name}
-            contactCompany={call.contact_company}
-            toNumber={call.to_number}
-          />
-        </td>
-        <td>{call.source}</td>
-        <td>
-          <CallStatus status={call.status} errors={call.errors}/>
-        </td>
-        <td>
-          <div className="time">
-            {call.time !== 0 && <div>{convertSecondsToMinutes(call.time)}</div>}
-          </div>
-          {/*<div className="time">*/}
-          {/*  {hoveredRow === call.id ? (*/}
-          {/*    <div className={`${styles.audio} ${hoveredRow === call.id ? 'visible' : ''}`}>*/}
-          {/*      <AudioPlayer time={call.time} record={call.record} partnershipId={call.partnership_id}/>*/}
-          {/*    </div>*/}
-          {/*  ) : (*/}
-          {/*    call.time !== 0 && <div>{convertSecondsToMinutes(call.time)}</div>*/}
-          {/*  )}*/}
-          {/*</div>*/}
+          Нет данных о звонках
         </td>
       </tr>
-    ))}
+    )}
+
+    {selectedPeriod === 'Сегодня' && (
+      <>
+        {callsToday.length > 0 && (
+          <CallGroup calls={callsToday} />
+        )}
+
+        {callsYesterday.length > 0 && (
+          <CallGroup groupName="Вчера" calls={callsYesterday} />
+        )}
+      </>
+    )}
+
+    {selectedPeriod !== 'Сегодня' && (
+      <CallGroup groupName={selectedPeriod} calls={filteredCalls} />
+    )}
     </tbody>
   );
 };

@@ -1,40 +1,32 @@
-import { useState } from 'react';
-import axios from 'axios';
+import {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchRecordData} from '@app/store/slices/callsAudioSlice';
+import {AppDispatch} from '@app/store/store';
+import {selectCallsAudio} from "@app/store/selectors/callsSelector.ts";
 
-export const useAudio = (record: string, partnershipId: string) => {
-  const [audioSrc, setAudioSrc] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+type UseAudioType = {
+  record?: string;
+  partnership_id?: string;
+};
 
-  const loadAudio = async () => {
-    setIsLoading(true);
-    setError(null);
+export const useAudio = ({record = undefined, partnership_id = undefined}: UseAudioType) => {
+  // {record= undefined, partnership_id=undefined} -> undefined заглушка
+  // {record, partnership_id} - по итогу вот так должно быть
+  const dispatch = useDispatch<AppDispatch>();
+  const {data: audioSrc, status, error} = useSelector(selectCallsAudio);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    try {
-      const response = await axios.post(
-        'https://api.skilla.ru/mango/getRecord',
-        {
-          record,
-          partnership_id: partnershipId,
-        },
-        {
-          headers: {
-            Authorization: 'Bearer testtoken',
-            'Content-Type': 'application/json',
-          },
-          responseType: 'blob',
-        }
-      );
-
-      const url = URL.createObjectURL(response.data);
-      setAudioSrc(url);
-    } catch (error) {
-      setError('Ошибка загрузки аудио');
-      console.error('Ошибка загрузки аудио:', error);
-    } finally {
-      setIsLoading(false);
+  useEffect(() => {
+    if (record && partnership_id) {
+      setIsLoading(true);
+      dispatch(fetchRecordData({record, partnership_id}))
+        .unwrap()
+        .catch((err) => {
+          console.error('Ошибка загрузки аудио:', err);
+        })
+        .finally(() => setIsLoading(false));
     }
-  };
+  }, [record, partnership_id, dispatch]);
 
-  return { audioSrc, isLoading, error, loadAudio };
+  return {audioSrc, isLoading: isLoading || status === 'loading', error};
 };
