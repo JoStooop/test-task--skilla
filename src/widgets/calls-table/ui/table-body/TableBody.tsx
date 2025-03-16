@@ -1,23 +1,33 @@
-import {FC} from 'react';
-import {Call} from "@app/store/slices/callsSlice.ts";
-import {TableRow} from "@shared/ui/table-row/TableRow.tsx";
-import {CallGroupHeader} from "@shared/ui/call-group-header/CallGroupHeader.tsx";
-import {getFormattedDate, getFormattedDates} from "@entities/call/utils/dateUtils.ts";
+import { FC } from 'react';
+import { Call } from '@app/store/slices/callsSlice.ts';
+import { getFormattedDate, getFormattedDates, getDateRange } from '@entities/call/utils/dateUtils.ts';
+import { OptionDate } from '@features/calls-table/types/tableOptionsTypes.ts';
+import {CallGroup} from "@shared/ui/call-group/CallGroup.tsx";
 
 interface TableBodyProps {
   calls: Call[];
+  selectedPeriod?: OptionDate;
 }
 
-export const TableBody: FC<TableBodyProps> = ({calls}) => {
-
+export const TableBody: FC<TableBodyProps> = ({ calls, selectedPeriod = 'Сегодня' }) => {
   const { today, yesterday } = getFormattedDates();
 
-  const callsToday = calls.filter((call) => getFormattedDate(call.date) === today);
-  const callsYesterday = calls.filter((call) => getFormattedDate(call.date) === yesterday);
+  const callsToday = selectedPeriod === 'Сегодня'
+    ? calls.filter((call) => getFormattedDate(call.date) === today) : [];
+  const callsYesterday = selectedPeriod === 'Сегодня'
+    ? calls.filter((call) => getFormattedDate(call.date) === yesterday) : [];
+
+  const { startDate, endDate } = getDateRange(selectedPeriod);
+  const filteredCalls = selectedPeriod !== 'Сегодня'
+    ? calls.filter((call) => {
+      const callDate = getFormattedDate(call.date);
+      return callDate >= startDate && callDate <= endDate;
+    })
+    : [];
 
   return (
     <tbody>
-    {callsToday.length === 0 && callsYesterday.length === 0 && (
+    {calls.length === 0 && (
       <tr>
         <td>
           Нет данных о звонках
@@ -25,17 +35,20 @@ export const TableBody: FC<TableBodyProps> = ({calls}) => {
       </tr>
     )}
 
-    {callsToday.length > 0 && callsToday.map((call) => (
-      <TableRow key={call.id} call={call} />
-    ))}
-
-    {callsYesterday.length > 0 && (
+    {selectedPeriod === 'Сегодня' && (
       <>
-        <CallGroupHeader groupName='Вчера' callCount={callsYesterday.length} />
-        {callsYesterday.map((call) => (
-          <TableRow key={call.id} call={call} />
-        ))}
+        {callsToday.length > 0 && (
+          <CallGroup calls={callsToday} />
+        )}
+
+        {callsYesterday.length > 0 && (
+          <CallGroup groupName="Вчера" calls={callsYesterday} />
+        )}
       </>
+    )}
+
+    {selectedPeriod !== 'Сегодня' && (
+      <CallGroup groupName={selectedPeriod} calls={filteredCalls} />
     )}
     </tbody>
   );

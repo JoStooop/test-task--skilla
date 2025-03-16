@@ -6,24 +6,25 @@ export const getDateRange = (option: OptionDate) => {
 
   switch (option) {
     case 'Сегодня':
+      startDate.setDate(today.getDate() - 1);
       return {
-        startDate: today.toISOString().split('T')[0],
+        startDate: startDate.toISOString().split('T')[0],
         endDate: today.toISOString().split('T')[0],
       };
     case 'Неделя':
-      startDate.setDate(today.getDate() - 6);
+      startDate.setDate(today.getDate() - 6); // Неделя
       return {
         startDate: startDate.toISOString().split('T')[0],
         endDate: today.toISOString().split('T')[0],
       };
     case 'Месяц':
-      startDate.setDate(today.getDate() - 29);
+      startDate.setDate(today.getDate() - 29); // Месяц
       return {
         startDate: startDate.toISOString().split('T')[0],
         endDate: today.toISOString().split('T')[0],
       };
     case 'Год':
-      startDate.setFullYear(today.getFullYear() - 1);
+      startDate.setFullYear(today.getFullYear() - 1); // Год
       return {
         startDate: startDate.toISOString().split('T')[0],
         endDate: today.toISOString().split('T')[0],
@@ -42,8 +43,29 @@ export const getFormattedDates = () => {
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
 
+  const lastWeek = new Date(today);
+  lastWeek.setDate(today.getDate() - 6);
+
+  const lastMonth = new Date(today);
+  lastMonth.setDate(today.getDate() - 29);
+
+  const lastYear = new Date(today);
+  lastYear.setFullYear(today.getFullYear() - 1);
+
   return {
     today: today.toISOString().split('T')[0],
     yesterday: yesterday.toISOString().split('T')[0],
+    lastWeek: {
+      startDate: lastWeek.toISOString().split('T')[0],
+      endDate: today.toISOString().split('T')[0],
+    },
+    lastMonth: {
+      startDate: lastMonth.toISOString().split('T')[0],
+      endDate: today.toISOString().split('T')[0],
+    },
+    lastYear: {
+      startDate: lastYear.toISOString().split('T')[0],
+      endDate: today.toISOString().split('T')[0],
+    },
   };
 };
